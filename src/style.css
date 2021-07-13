@@ -1,0 +1,25 @@
+.container{
+    margin: 0px auto;
+    width: 80%;
+}
+
+.title{
+    color: rgba(171, 106, 184, 0.411);
+    text-align: center;
+    margin-top: 50px;
+    padding: auto;
+}
+
+.line{
+    border-top: 1px dotted #bbb;
+    margin-bottom: 30px;
+}
+
+.list-item{
+    font-size:20px;
+    background-color: rgba(171, 106, 184, 0.411);
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    height: 2vh;
+}
