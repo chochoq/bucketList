@@ -1,12 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
+
 // BucketList 컴포넌트를 import 해옵니다.
 // import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
 import BucketList from './BucketList';
+import Detail from './Detail'
+
 // import './style.css';
 // import './scss_ex.scss';
 import styled from 'styled-components';
 // import LifecycleEx from './LifecycleEx';
+
+import { Route, Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+
 
 
 // 클래스형 컴포넌트는 이렇게 생겼습니다!
@@ -55,6 +61,13 @@ class App extends React.Component {
             <input type="text" ref={this.text}/>
             <button onClick={this.addBucketList}>추가하기</button>
           </Add>
+
+          <Route path="/Detail" component={Detail}></Route>
+
+
+          <button onClick={() => {
+            this.props.history.goBack();
+          }}>뒤로가기</button>
       </AppDiv>
     );
   }
@@ -99,4 +112,4 @@ const Add = styled.div`
   border: 1px solid #ddd;
 `;
 
-export default App;
+export default withRouter(App);
