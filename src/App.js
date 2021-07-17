@@ -81,7 +81,8 @@ class App extends React.Component {
             <Route exact path="/"
                 render={(props) => <BucketList history={this.props.history} list={this.props.bucket_list} />}></Route>
                 
-            <Route path="/detail" component={Detail}/>
+              {/* 2) 몇 번째 상세에 와있는 지 알기 위해, URL 파라미터를 적용하자 ----- 함수형 리덕스사용법 -> de */}
+            <Route path="/detail/:index" component={Detail}/>
               
             {/* notfound에서 이미 history가 넘어갔지만, 
               render 연습으로 다시 해봄.
