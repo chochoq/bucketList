@@ -30,7 +30,9 @@ const BucketList = (props) => {
                 my_lists.map((list, index) => {
                     // 콘솔을 확인해봅시다 :)
                     console.log(list);
-                    return (<ListItem className="list-item" key={index}>{list}</ListItem>);
+                    return (
+                        <ListItem className="list-item" key={index}
+                        onClick={() => { props.history.push('/detail') }}>{list}</ListItem>);
                 })
             }
         </list>

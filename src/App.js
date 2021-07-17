@@ -10,7 +10,7 @@ import Detail from './Detail'
 import styled from 'styled-components';
 // import LifecycleEx from './LifecycleEx';
 
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 
@@ -51,23 +51,25 @@ class App extends React.Component {
           {/* <LifecycleEx></LifecycleEx> */}
           <Container className="container">
               <Title className="title">내 버킷리스트</Title>
-              <Line className="line"/>
-              {/* 컴포넌트를 넣어줍니다. */}
-              {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
-              <BucketList list={this.state.list} />
+              <Line className="line" />
+            
+              {/* route에서 props 넘기기 */}
+              <Route
+                path="/"
+                render={(props) => <BucketList history={this.props.history} list={this.state.list} />}></Route>
+              
+              <Route path="/detail" component={Detail}></Route>
           </Container>
 
           <Add>
             <input type="text" ref={this.text}/>
             <button onClick={this.addBucketList}>추가하기</button>
+            <button onClick={() => {
+              this.props.history.goBack();
+            }}>뒤로가기</button>
           </Add>
 
-          <Route path="/Detail" component={Detail}></Route>
-
-
-          <button onClick={() => {
-            this.props.history.goBack();
-          }}>뒤로가기</button>
+          
       </AppDiv>
     );
   }
