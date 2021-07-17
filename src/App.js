@@ -1,16 +1,12 @@
 import React from 'react';
 
-// BucketList 컴포넌트를 import 해옵니다.
-// import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
 import BucketList from './BucketList';
-import Detail from './Detail'
+import Detail from './Detail';
+import NotFound from './NotFound';
 
-// import './style.css';
-// import './scss_ex.scss';
 import styled from 'styled-components';
-// import LifecycleEx from './LifecycleEx';
 
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 
@@ -45,20 +41,33 @@ class App extends React.Component {
   render() {
     // this 키워드를 통해 state에 접근할 수 있어요.
     console.log(this.state);
+    
+    console.log(Switch);
 
       return (
         <AppDiv className="App">
-          {/* <LifecycleEx></LifecycleEx> */}
+
           <Container className="container">
-              <Title className="title">내 버킷리스트</Title>
-              <Line className="line" />
             
+            <Title className="title">내 버킷리스트</Title>
+            <Line className="line" />
+            
+
+          <Switch>
               {/* route에서 props 넘기기 */}
-              <Route
-                path="/"
+            <Route exact path="/"
                 render={(props) => <BucketList history={this.props.history} list={this.state.list} />}></Route>
+                
+            <Route path="/detail" component={Detail}/>
               
-              <Route path="/detail" component={Detail}></Route>
+            {/* notfound에서 이미 history가 넘어갔지만, 
+              render 연습으로 다시 해봄.
+              props 사용or not으로 2가지 방법으로 해보았다
+             */}
+            {/* <Route render={() => <NotFound history={this.state.history}/> } /> */}
+            <Route render={(props) => <NotFound history={props.history}/> } />
+          </Switch>
+
           </Container>
 
           <Add>
