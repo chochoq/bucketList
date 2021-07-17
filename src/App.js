@@ -9,7 +9,27 @@ import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
+import { connect } from 'react-redux';
+import { loadBucket, createBucket } from './redux/modules/bucket';
 
+// 1) 리덕스 모듈과 connect 함수를 불러옵니다.
+// 스토어에 있는 스테이트를 props의 형태로 App.js에 넣어준다
+const mapStateToProps = (state) => {
+  return {bucket_list : state.bucket.list};
+}
+
+// 2)상태값을 가져오는 함수와 액션 생성 함수를 부르는 함수를 만들어줍니다.
+// 액션을 디스패치한다(??)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    load: () => {
+      dispatch(loadBucket());
+    },
+    create: (bucket) => {
+      dispatch(createBucket(bucket));
+    }
+  };
+}
 
 // 클래스형 컴포넌트는 이렇게 생겼습니다!
 class App extends React.Component {
@@ -18,7 +38,7 @@ class App extends React.Component {
     super(props);
     // App 컴포넌트의 state를 정의해줍니다.
     this.state = {
-      list: ['영화관 가기', '매일 책읽기', '수영 배우기'],
+      // 5) this.state에  있는 list를 지우고 스토어에 있는 값으로 바꿔봅시다!
     };
 
     // input을 위한 ref
@@ -28,13 +48,15 @@ class App extends React.Component {
   componentDidMount() {
     console.log(this.text);
     console.log(this.text.current);
+    // 4) 콘솔에 this.props를 찍어봅니다. 
+    console.log(this.props);
   }
   
   addBucketList = () => {
     let list = this.state.list;
     const new_item = this.text.current.value;
-    
-    this.setState({ list: [...list, new_item] });
+    // 6) setState를 this.props.create로 바꿔봅시다!
+    this.props.create(new_item);
   }
 
   // 랜더 함수 안에 리액트 엘리먼트를 넣어줍니다!
@@ -55,8 +77,9 @@ class App extends React.Component {
 
           <Switch>
               {/* route에서 props 넘기기 */}
+              {/* 5) this.state에  있는 list를 지우고 스토어에 있는 값으로 바꿔봅시다! */}
             <Route exact path="/"
-                render={(props) => <BucketList history={this.props.history} list={this.state.list} />}></Route>
+                render={(props) => <BucketList history={this.props.history} list={this.props.bucket_list} />}></Route>
                 
             <Route path="/detail" component={Detail}/>
               
@@ -123,4 +146,5 @@ const Add = styled.div`
   border: 1px solid #ddd;
 `;
 
-export default withRouter(App);
+// 3)connect로 컴포넌트와 스토어를 엮어줍니다.
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(App));
