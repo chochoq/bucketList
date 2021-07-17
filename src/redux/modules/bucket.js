@@ -4,6 +4,7 @@
 // 현재 기능은 조회하기, 추가하기가 있다
 const LOAD = "bucket/LOAD";
 const CREATE = "bucket/CREATE";
+const DELETE = "bucket/DELETE";
 
 // 처음에 들어가면 리스트가 있음->기본값
 const initialState = {
@@ -19,6 +20,9 @@ export const createBucket = (bucket) => {
     return { type: CREATE, bucket };
 }
 
+export const deleteBucket = (bucket) => {
+    return {type:DELETE,bucket};
+}
 
 // Reducer
 
@@ -32,6 +36,16 @@ export default function reducer(state = initialState, action = {}) {
             const new_bucket_list = [...state.list, action.bucket];
             return {list:new_bucket_list}
         }
-    default: return state;
+        
+        case "bucket/DELETE": {
+            const bucket_list = state.list.filter((l, idx) => {
+                if (idx !== action.bucket) {
+                    return l;
+                }
+            });
+            return {list:bucket_list};
+        }
+        default:
+            return state;
     }
 }
