@@ -72,7 +72,7 @@ class App extends React.Component {
 
           <Container className="container">
             
-            <Title className="title">내 버킷리스트</Title>
+            <Title className="title">🗒to do🗒</Title>
             <Progress/>
             <Line className="line" />
             
@@ -97,16 +97,24 @@ class App extends React.Component {
           </Container>
 
           <Add>
-            <input type="text" ref={this.text}/>
-            <button onClick={this.addBucketList}>추가하기</button>
-            <button onClick={() => {
-              this.props.history.goBack();
-            }}>뒤로가기</button>
+            <input type="text" ref={this.text}></input>
+            <button onClick={this.addBucketList}>추가</button>
+            
+
+            
           </Add>
 
-          <button onClick={() => {
+          
+          <Back
+            onClick={() => {
+              this.props.history.goBack();
+          }}>🔙</Back>
+          
+          <Top onClick={() => {
             window.scrollTo({top:0,left:0, behavior:"smooth"});
-          }}>go to top</button>
+            }}>🔝</Top>
+
+          
       </AppDiv>
     );
   }
@@ -123,7 +131,7 @@ const AppDiv = styled.div`
 
 const Container = styled.div`
   max-width: 350px;
-  min-height: 80vh;
+  min-height: 70vh;
   background-color: #fff;
   padding: 16px;
   margin: 20px auto;
@@ -132,7 +140,7 @@ const Container = styled.div`
 `
 
 const Title = styled.h1`
-  color: rgba(171, 106, 184, 0.411);
+  color: #8B5599;
   text-align: center;
 `
 
@@ -149,7 +157,61 @@ const Add = styled.div`
   margin: 20px auto;
   border-radius: 5px;
   border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & > * {
+    padding: 5px;
+  }
+  & input {
+    border-radius: 5px;
+    margin-right: 10px;
+    border: 1px solid #888;
+    width: 70%;
+    &:focus {
+      background-color: #ddd;
+    }
+  }
+
+  & button{
+    width:25%;
+    background-color: #DCC2E2;
+    border: 1px solid #ddd0e0;
+    border-radius: 10px;
+  }
 `;
+
+
+const Top = styled.button`
+
+  width:60px;
+  height: 60px;
+
+  align-items: center;
+  background-color: #DCC2E2;
+  border: 1px solid #DCC2E2;
+
+
+  left: 50%;
+  position: relative;
+
+  font-size:40px;
+`;
+const Back = styled.button`
+
+  width:60px;
+  height: 60px;
+
+  align-items: center;
+  background-color: #DCC2E2;
+  border: 1px solid #DCC2E2;
+
+  left: 20%;
+  position: relative;
+
+  font-size:40px;
+`;
+
 
 // 3)connect로 컴포넌트와 스토어를 엮어줍니다.
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(App));

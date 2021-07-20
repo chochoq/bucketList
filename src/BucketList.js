@@ -13,35 +13,38 @@ const BucketList = (props) => {
     console.log(bucket_list);
     // 컴포넌트가 뿌려줄 ui 요소(리엑트 엘리먼트라고 불러요.)를 반환해줍니다.
     return (
-        <list className="lists">
+        <ListStyle>
             {/* 2) 몇 번째 상세에 와있는 지 알기 위해, URL 파라미터를 적용하자 --- app.js에도 적용한다 */}
             {bucket_list.map((list, index) => {
                 return (
                     <ListItem
                         className="list-item"
+                        complete={list.complete}
                         key={index}
-                        color={list.complete ? "#8b5599":"#DCC2E2"}
                         onClick={() => { props.history.push('/detail/'+index) }}
                     >{list.text}</ListItem>);
                 })
             }
-        </list>
+        </ListStyle>
     );
 }
 
 
-const list = styled.div`
+const ListStyle = styled.div`
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 50vh;
     overflow-x: hidden;
     overflow-y: auto;
+    max-height: 50vh;
 `
 
 const ListItem = styled.div`
     padding: 16px;
     margin: 8px;
-    background-color: ${props=>props.color};
+    background-color: ${props => props.complete? "#8b5599":"#DCC2E2"};
+    color: ${props => props.complete ? "#DCC2E2" : "#8b5599"};
+    font-weight: 550;
     border-radius: 5px;
 `
 

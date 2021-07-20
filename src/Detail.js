@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteBucket, updateBucket } from './redux/modules/bucket';
+import styled from 'styled-components';
 
 const Detail = (props) => {
     const dispatch = useDispatch();
@@ -15,17 +16,26 @@ const Detail = (props) => {
         <div>
             <h1>{bucket_list[bucket_index].text}</h1>
 
-            <button onClick={() => {
+            <Button onClick={() => {
                 dispatch(deleteBucket(bucket_index));
                 props.history.goBack();
-            }}>삭제</button>
+            }}>삭제</Button>
 
-            <button onClick={() => {
+            <Button onClick={() => {
                 dispatch(updateBucket(bucket_index));
                 props.history.goBack();
-            }}>완료하기</button>
+            }}>완료하기</Button>
         </div>
     )
 }
+
+const Button = styled.button`
+    width:25%;
+    background-color: #DCC2E2;
+    border: 1px solid #ddd0e0;
+    border-radius: 10px;
+    margin: 5% 12%;
+`;
+
 
 export default Detail;
