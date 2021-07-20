@@ -104,7 +104,9 @@ class App extends React.Component {
             }}>뒤로가기</button>
           </Add>
 
-          
+          <button onClick={() => {
+            window.scrollTo({top:0,left:0, behavior:"smooth"});
+          }}>go to top</button>
       </AppDiv>
     );
   }
