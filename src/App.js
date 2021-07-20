@@ -13,6 +13,8 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { loadBucket, createBucket } from './redux/modules/bucket';
 
+import { firestore } from "./firebase";
+
 // 1) 리덕스 모듈과 connect 함수를 불러옵니다.
 // 스토어에 있는 스테이트를 props의 형태로 App.js에 넣어준다
 const mapStateToProps = (state) => {
@@ -47,10 +49,25 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.text);
-    console.log(this.text.current);
-    // 4) 콘솔에 this.props를 찍어봅니다. 
-    console.log(this.props);
+    // 파이어베이스 데이터 접근
+    const bucket = firestore.collection("bucket");
+    // 비동기작업
+    bucket.doc("bucket_item2").get().then((doc) => {
+      // 데이터 유무 확인
+      if (doc.exists) {
+        console.log(doc.data());
+        console.log(doc.id);
+      }
+      console.log(doc.exists)
+    });
+
+    // 파이어베이스에 있는 콜렉션 찾기
+    bucket.get().then(docs => {
+      docs.forEach((doc) => {
+        console.log(doc.data());
+        console.log(doc.id);
+      });
+    });
   }
   
   addBucketList = () => {
