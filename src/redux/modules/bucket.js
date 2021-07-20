@@ -1,10 +1,12 @@
 // bucket.js
 
 // Actions
-// 현재 기능은 조회하기, 추가하기가 있다
+// 현재 기능은 조회하기, 추가하기가 있다 
 const LOAD = "bucket/LOAD";
 const CREATE = "bucket/CREATE";
 const DELETE = "bucket/DELETE";
+// 완료하기
+const UPDATE = "bucket/UPDATE";
 
 // 처음에 들어가면 리스트가 있음->기본값
 const initialState = {
@@ -27,6 +29,9 @@ export const createBucket = (bucket) => {
 export const deleteBucket = (bucket) => {
     return {type:DELETE,bucket};
 }
+export const updateBucket = (bucket) => {
+    return {type:UPDATE,bucket};
+}
 
 // Reducer
 
@@ -47,6 +52,16 @@ export default function reducer(state = initialState, action = {}) {
                     return l;
                 }
             });
+            return {list:bucket_list};
+        }
+        case "bucket/UPDATE": {
+            const bucket_list = state.list.map((l, idx) => {
+                if (idx === action.bucket) {
+                    return { ...l, complete:true };
+                } else {
+                    return l;
+                }
+            })
             return {list:bucket_list};
         }
         default:

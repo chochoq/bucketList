@@ -10,9 +10,7 @@ const BucketList = (props) => {
     // -1) BucketList.js에 useSelector() 적용하기
     const bucket_list = useSelector(state => state.bucket.list);
 
-
-
-    console.log(props);
+    console.log(bucket_list);
     // 컴포넌트가 뿌려줄 ui 요소(리엑트 엘리먼트라고 불러요.)를 반환해줍니다.
     return (
         <list className="lists">
@@ -22,6 +20,7 @@ const BucketList = (props) => {
                     <ListItem
                         className="list-item"
                         key={index}
+                        color={list.complete ? "#8b5599":"#DCC2E2"}
                         onClick={() => { props.history.push('/detail/'+index) }}
                     >{list.text}</ListItem>);
                 })
@@ -42,7 +41,7 @@ const list = styled.div`
 const ListItem = styled.div`
     padding: 16px;
     margin: 8px;
-    background-color: rgba(171, 106, 184, 0.411);
+    background-color: ${props=>props.color};
     border-radius: 5px;
 `
 
