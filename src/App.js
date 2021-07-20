@@ -3,6 +3,7 @@ import React from 'react';
 import BucketList from './BucketList';
 import Detail from './Detail';
 import NotFound from './NotFound';
+import Progress from './Progress';
 
 import styled from 'styled-components';
 
@@ -72,6 +73,7 @@ class App extends React.Component {
           <Container className="container">
             
             <Title className="title">내 버킷리스트</Title>
+            <Progress/>
             <Line className="line" />
             
 
