@@ -23,7 +23,7 @@ const BucketList = (props) => {
                         className="list-item"
                         key={index}
                         onClick={() => { props.history.push('/detail/'+index) }}
-                    >{list}</ListItem>);
+                    >{list.text}</ListItem>);
                 })
             }
         </list>

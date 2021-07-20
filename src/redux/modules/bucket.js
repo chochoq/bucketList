@@ -8,7 +8,11 @@ const DELETE = "bucket/DELETE";
 
 // 처음에 들어가면 리스트가 있음->기본값
 const initialState = {
-    list: ['영화관 가기', '매일 책읽기', '수영 배우기'],
+    list: [
+        {text:'영화관 가기',complete:false},
+        {text:'매일 책읽기',complete:false},
+        {text:'수영 배우기',complete:false},
+    ],
 };
 
 // Action Creators
@@ -33,7 +37,7 @@ export default function reducer(state = initialState, action = {}) {
         }
             
         case "bucket/CREATE": {
-            const new_bucket_list = [...state.list, action.bucket];
+            const new_bucket_list = [...state.list, {text:action.bucket, complete:false}];
             return {list:new_bucket_list}
         }
         

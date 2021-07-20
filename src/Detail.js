@@ -13,7 +13,7 @@ const Detail = (props) => {
     
     return (
         <div>
-            <h1>{bucket_list[bucket_index]}</h1>
+            <h1>{bucket_list[bucket_index].text}</h1>
 
             <button onClick={() => {
                 dispatch(deleteBucket(bucket_index));
