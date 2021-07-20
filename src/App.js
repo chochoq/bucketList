@@ -63,10 +63,17 @@ class App extends React.Component {
 
     // 파이어베이스에 있는 콜렉션 찾기
     bucket.get().then(docs => {
+      let bucket_data = [];
+
       docs.forEach((doc) => {
+        if (doc.exists) {
+          bucket_data = [...bucket_data, {id:doc.id, ...doc.data()}];
+        }
         console.log(doc.data());
         console.log(doc.id);
       });
+
+      console.log(bucket_data);
     });
   }
   
