@@ -75,6 +75,22 @@ class App extends React.Component {
 
       console.log(bucket_data);
     });
+
+    // Add a new document with a generated id.
+    // bucket.add({text:"공부하기", complete:false}).then((docRef) => {
+    //   console.log(docRef);
+    //   console.log(docRef.id);
+    // })
+
+    // update document
+    // bucket.doc("yG5uySFCAHA4dk97LuqK").update({text:"자수하기"})
+
+    // delete
+    // bucket.doc("HHb3vudvuFTlpV6MpZsh").delete().then((docRef) => {
+    //   console.log("지웠습니다");
+    // })
+
+    
   }
   
   addBucketList = () => {
