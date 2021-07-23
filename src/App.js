@@ -11,7 +11,7 @@ import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
-import { loadBucket, createBucket } from './redux/modules/bucket';
+import { loadBucket, createBucket, loadBucketFB, addBucketFB } from './redux/modules/bucket';
 
 import { firestore } from "./firebase";
 
@@ -26,10 +26,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     load: () => {
-      dispatch(loadBucket());
+      dispatch(loadBucketFB());
     },
     create: (bucket) => {
-      dispatch(createBucket(bucket));
+      dispatch(addBucketFB(bucket));
     }
   };
 }
@@ -49,48 +49,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // 파이어베이스 데이터 접근
-    const bucket = firestore.collection("bucket");
-    // 비동기작업
-    bucket.doc("bucket_item2").get().then((doc) => {
-      // 데이터 유무 확인
-      if (doc.exists) {
-        console.log(doc.data());
-        console.log(doc.id);
-      }
-      console.log(doc.exists)
-    });
-
-    // 파이어베이스에 있는 콜렉션 찾기
-    bucket.get().then(docs => {
-      let bucket_data = [];
-
-      docs.forEach((doc) => {
-        if (doc.exists) {
-          bucket_data = [...bucket_data, {id:doc.id, ...doc.data()}];
-        }
-        console.log(doc.data());
-        console.log(doc.id);
-      });
-
-      console.log(bucket_data);
-    });
-
-    // Add a new document with a generated id.
-    // bucket.add({text:"공부하기", complete:false}).then((docRef) => {
-    //   console.log(docRef);
-    //   console.log(docRef.id);
-    // })
-
-    // update document
-    // bucket.doc("yG5uySFCAHA4dk97LuqK").update({text:"자수하기"})
-
-    // delete
-    // bucket.doc("HHb3vudvuFTlpV6MpZsh").delete().then((docRef) => {
-    //   console.log("지웠습니다");
-    // })
-
-    
+    this.props.load();    
   }
   
   addBucketList = () => {
