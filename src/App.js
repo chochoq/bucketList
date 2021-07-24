@@ -4,6 +4,7 @@ import BucketList from './BucketList';
 import Detail from './Detail';
 import NotFound from './NotFound';
 import Progress from './Progress';
+import Spinner from './Spinner';
 
 import styled from 'styled-components';
 
@@ -11,15 +12,17 @@ import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
-import { loadBucket, createBucket, loadBucketFB, addBucketFB } from './redux/modules/bucket';
+import { loadBucketFB, addBucketFB } from './redux/modules/bucket';
 
 import { firestore } from "./firebase";
 
 // 1) 리덕스 모듈과 connect 함수를 불러옵니다.
 // 스토어에 있는 스테이트를 props의 형태로 App.js에 넣어준다
-const mapStateToProps = (state) => {
-  return {bucket_list : state.bucket.list};
-}
+const mapStateToProps = (state) => ({
+  bucket_list: state.bucket.list,
+  is_loaded: state.bucket.is_loaded
+});
+
 
 // 2)상태값을 가져오는 함수와 액션 생성 함수를 부르는 함수를 만들어줍니다.
 // 액션을 디스패치한다(??)
@@ -68,50 +71,51 @@ class App extends React.Component {
 
       return (
         <AppDiv className="App">
-
-          <Container className="container">
+          {!this.props.is_loaded ? (<Spinner />) : (
+            <React.Fragment>
+              <Container >
             
-            <Title className="title">🗒to do🗒</Title>
-            <Progress/>
-            <Line className="line" />
-            
+                <Title>🗒to do🗒</Title>
+                <Progress/>
+                <Line/>
 
-          <Switch>
-              {/* route에서 props 넘기기 */}
-              {/* 5) this.state에  있는 list를 지우고 스토어에 있는 값으로 바꿔봅시다! */}
-            <Route exact path="/"
-                render={(props) => <BucketList history={this.props.history} list={this.props.bucket_list} />}></Route>
+                <Switch>
+                    {/* route에서 props 넘기기 */}
+                    {/* 5) this.state에  있는 list를 지우고 스토어에 있는 값으로 바꿔봅시다! */}
+                  <Route exact path="/" component={BucketList}></Route>
+                      
+                    {/* 2) 몇 번째 상세에 와있는 지 알기 위해, URL 파라미터를 적용하자 ----- 함수형 리덕스사용법 -> de */}
+                  <Route path="/detail/:index" component={Detail}/>
+                    
+                  {/* notfound에서 이미 history가 넘어갔지만, 
+                    render 연습으로 다시 해봄.
+                    props 사용or not으로 2가지 방법으로 해보았다
+                  */}
+                  {/* <Route render={() => <NotFound history={this.state.history}/> } /> */}
+                  <Route render={(props) => <NotFound history={props.history}/> } />
+                </Switch>
+
+              </Container>
+
+              <Add>
+                <input type="text" ref={this.text}></input>
+                <button onClick={this.addBucketList}>추가</button>
                 
-              {/* 2) 몇 번째 상세에 와있는 지 알기 위해, URL 파라미터를 적용하자 ----- 함수형 리덕스사용법 -> de */}
-            <Route path="/detail/:index" component={Detail}/>
+              </Add>
+
+              <Back
+                onClick={() => {
+                  this.props.history.goBack();
+              }}>🔙</Back>
               
-            {/* notfound에서 이미 history가 넘어갔지만, 
-              render 연습으로 다시 해봄.
-              props 사용or not으로 2가지 방법으로 해보았다
-             */}
-            {/* <Route render={() => <NotFound history={this.state.history}/> } /> */}
-            <Route render={(props) => <NotFound history={props.history}/> } />
-          </Switch>
-
-          </Container>
-
-          <Add>
-            <input type="text" ref={this.text}></input>
-            <button onClick={this.addBucketList}>추가</button>
-            
-
-            
-          </Add>
+              <Top onClick={() => {
+                window.scrollTo({top:0,left:0, behavior:"smooth"});
+              }}>🔝</Top>
+              
+            </React.Fragment>
+          )}
 
           
-          <Back
-            onClick={() => {
-              this.props.history.goBack();
-          }}>🔙</Back>
-          
-          <Top onClick={() => {
-            window.scrollTo({top:0,left:0, behavior:"smooth"});
-            }}>🔝</Top>
 
           
       </AppDiv>
