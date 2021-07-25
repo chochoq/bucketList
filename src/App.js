@@ -16,6 +16,7 @@ import { loadBucketFB, addBucketFB } from './redux/modules/bucket';
 
 import { firestore } from "./firebase";
 
+
 // 1) 리덕스 모듈과 connect 함수를 불러옵니다.
 // 스토어에 있는 스테이트를 props의 형태로 App.js에 넣어준다
 const mapStateToProps = (state) => ({
@@ -62,6 +63,13 @@ class App extends React.Component {
     this.props.create(new_item);
   }
 
+  // 엔터시 추가
+  handleKeyPress = (e) => {
+    if (e.key == 'Enter') {
+      this.addBucketList();
+    }
+  }
+
   // 랜더 함수 안에 리액트 엘리먼트를 넣어줍니다!
   render() {
     // this 키워드를 통해 state에 접근할 수 있어요.
@@ -98,8 +106,10 @@ class App extends React.Component {
               </Container>
 
               <Add>
-                <input type="text" ref={this.text}></input>
-                <button onClick={this.addBucketList}>추가</button>
+                <input type="text" ref={this.text} onKeyPress={this.handleKeyPress}></input>
+                <button onClick={
+                  this.addBucketList
+                }>추가</button>
                 
               </Add>
 
