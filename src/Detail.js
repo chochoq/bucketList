@@ -4,13 +4,8 @@ import { updateBucketFB, deleteBucketFB } from './redux/modules/bucket';
 
 import { Button, ButtonGroup } from '@material-ui/core';
 
-
-
 const Detail = (props) => {
     const dispatch = useDispatch();
-
-
-
 
     // -3) 상세페이지에서 버킷리스트 내용을 띄워보자
     const bucket_list = useSelector((state) => state.bucket.list);
@@ -36,7 +31,9 @@ const Detail = (props) => {
                     dispatch(updateBucketFB(bucket_index));
                     props.history.goBack();
                     }}>완료하기</Button>
+                
             </ButtonGroup>
+
         </div>
     )
 }

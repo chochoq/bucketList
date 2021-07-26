@@ -219,7 +219,7 @@ const Back = styled.button`
   background-color: #DCC2E2;
   border: 1px solid #DCC2E2;
 
-  left: 20%;
+  left: 50%;
   position: relative;
 
   font-size:40px;

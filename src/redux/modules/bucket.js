@@ -47,16 +47,16 @@ export const isLoaded = (loaded) => {
 export const loadBucketFB = () => {
     return function (dispatch) {
         bucket_db.get().then((docs) => {
-            let bucket_date = [];
+            let bucket_data = [];
 
             docs.forEach((doc) => {
                 if (doc.exists) {
-                    bucket_date = [...bucket_date, { id: doc.id, ...doc.data() }];
+                    bucket_data = [...bucket_data, { id: doc.id, ...doc.data() }];
                 }
             })
 
-            console.log(bucket_date);
-            dispatch(loadBucket(bucket_date));
+            console.log(bucket_data);
+            dispatch(loadBucket(bucket_data));
         })
     }
 }
