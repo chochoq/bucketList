@@ -65,7 +65,7 @@ class App extends React.Component {
 
   // 엔터시 추가
   handleKeyPress = (e) => {
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       this.addBucketList();
     }
   }
